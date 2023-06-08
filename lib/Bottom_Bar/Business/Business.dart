@@ -5,6 +5,8 @@ import 'package:news/Cubit/cubit.dart';
 import 'package:news/Cubit/states.dart';
 import 'package:news/buildItem.dart';
 
+import '../../article_builder.dart';
+
 class Business extends StatelessWidget {
 
   @override
@@ -15,16 +17,7 @@ class Business extends StatelessWidget {
       builder:(context, state) {
 
         var list = NewsCubit.get(context).business;
-        return ConditionalBuilder(
-          condition: state is! NewsGetBusinessLoadingStates ,
-          builder:(context) => ListView.separated(
-            physics: BouncingScrollPhysics(),
-            itemBuilder:(context, index) => buildArticleItem(list[index]),
-            separatorBuilder: (context, index) => myDivider() ,
-            itemCount: list.length,
-          ) ,
-          fallback: (context) =>Center(child: CircularProgressIndicator()) ,
-        );
+        return articleBuilder (list,context);
       },
 
     );

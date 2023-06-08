@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class DioHelper {
   static late Dio dio;
@@ -7,7 +6,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://newsapi.org/',
+        baseUrl: 'https://gnews.io/api/',
         receiveDataWhenStatusError: true,
       ),
     );
