@@ -31,7 +31,7 @@ Widget buildArticleItem (article,context) => Padding(
                     overflow: TextOverflow.ellipsis
                     ),
               ),
-              Text('${article['description']}',style: TextStyle(
+              Text('${article['publishedAt']}',style: TextStyle(
                   color: Colors.grey,
               ),
                   maxLines: 3,

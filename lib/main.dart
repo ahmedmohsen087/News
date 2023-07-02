@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:news/Cubit/cubit.dart';
 import 'package:news/Cubit/states.dart';
+import 'package:news/Dio/cache_helper.dart';
 import 'package:news/Dio/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Home_Screen/HomeScreen.dart';
+import 'Search/search.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
+  await CacheHelper.init();
   runApp( MyApp());
 }
 
@@ -15,8 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider(
-      create: (BuildContext context) => NewsCubit(),
+    return  MultiBlocProvider(
+      providers: [
+        BlocProvider(create: ( context) => NewsCubit()..getBusiness()
+          ..getScience()..getSports(),)
+      ],
+
       child: BlocConsumer<NewsCubit,NewsStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -24,6 +32,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.deepOrange,
               appBarTheme: AppBarTheme(
+                titleSpacing: 20,
                   color: Colors.white,
                   elevation: 0,
                   titleTextStyle: TextStyle(
@@ -59,6 +68,7 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData(
               primarySwatch: Colors.deepOrange,
               appBarTheme: AppBarTheme(
+                  titleSpacing: 20,
                   color: Colors.white30,
                   elevation: 0,
                   titleTextStyle: TextStyle(
@@ -94,7 +104,13 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: NewsCubit.get(context).isDark?ThemeMode.dark:ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home:  HomeScreen(),
+            initialRoute: HomeScreen.routeName,
+            routes: {
+              HomeScreen.routeName:(_) =>HomeScreen(),
+              SearchScreen.routeName:(_) => SearchScreen()
+
+
+            },
           );
         },
       ),

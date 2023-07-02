@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/Bottom_Bar/Settings/Seetings.dart';
 import 'package:news/Cubit/states.dart';
+import 'package:news/Dio/cache_helper.dart';
 import 'package:news/Dio/dio_helper.dart';
 
 import '../Bottom_Bar/Business/Business.dart';
@@ -19,7 +20,7 @@ class NewsCubit extends Cubit<NewsStates> {
     BottomNavigationBarItem(icon: Icon(Icons.business), label: 'Business'),
     BottomNavigationBarItem(icon: Icon(Icons.sports_baseball), label: 'Sports'),
     BottomNavigationBarItem(icon: Icon(Icons.science), label: 'Science'),
-    BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Seetings'),
+
 
   ];
 
@@ -27,7 +28,6 @@ class NewsCubit extends Cubit<NewsStates> {
     Business(),
     Sports(),
     Science(),
-    Seetings(),
   ];
 
 
@@ -100,7 +100,32 @@ class NewsCubit extends Cubit<NewsStates> {
 
   void changeAppMode (){
     isDark =!isDark;
-    emit(AppChangeModeStates());
+    CacheHelper.putData(key: 'isDark', value: isDark).then((value) {
+      emit(AppChangeModeStates());
+    });
+  }
+
+  List<dynamic> Search =[];
+
+  void getSearch (String value ){
+    emit(NewsGetSearchLoadingStates());
+    DioHelper.getData(
+        url: 'v4/search',
+        query: {
+          'country':'eg',
+          'q':'$value',
+          'apikey':'157b4c47bb741c8688fc93a8e5ca3727',
+        }).then((value) {
+      //print(value.data.toString());
+      Search=value.data['articles'];
+      // print(business[0]['title']);
+      emit(NewsGetSearchSuccessStates());
+    } ).catchError((error){
+      // print(error.toString());
+      emit(NewsGetSearchErrorStates(error.toString()));
+    });
   }
 
 }
+
+
