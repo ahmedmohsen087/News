@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/Cubit/cubit.dart';
 import 'package:news/Cubit/states.dart';
+import 'package:news/buildItem.dart';
 
 import '../Search/search.dart';
 
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
             actions: [
               IconButton(onPressed: () {
                 Navigator.pushNamed(context, SearchScreen.routeName);
+                //NavigateTo(context, SearchScreen());
 
             },
                 icon: Icon(Icons.search)),

@@ -4,6 +4,7 @@ import 'package:news/Cubit/states.dart';
 import 'package:news/Dio/cache_helper.dart';
 import 'package:news/Dio/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/web-view/web_view.dart';
 import 'Home_Screen/HomeScreen.dart';
 import 'Search/search.dart';
 
@@ -107,7 +108,7 @@ class MyApp extends StatelessWidget {
             initialRoute: HomeScreen.routeName,
             routes: {
               HomeScreen.routeName:(_) =>HomeScreen(),
-              SearchScreen.routeName:(_) => SearchScreen()
+              SearchScreen.routeName:(_) => SearchScreen(),
 
 
             },
