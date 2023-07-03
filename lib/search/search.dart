@@ -5,9 +5,10 @@ import 'package:news/article_builder.dart';
 import '../Cubit/cubit.dart';
 import '../Cubit/states.dart';
 
+var SearchController = TextEditingController();
+
 class SearchScreen extends StatelessWidget {
   static const String routeName = 'SearchScreen' ;
-  var SearchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
